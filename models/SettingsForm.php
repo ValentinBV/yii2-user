@@ -73,7 +73,9 @@ class SettingsForm extends Model
     {
         return [
             'usernameTrim' => ['username', 'trim'],
-            'usernameRequired' => ['username', 'required'],
+            'usernameRequired' => ['username', 'required', 'when' => function() {
+                        return $this->module->enableUsernameRegistration;
+            }],
             'usernameLength'   => ['username', 'string', 'min' => 3, 'max' => 255],
             'usernamePattern' => ['username', 'match', 'pattern' => '/^[-a-zA-Z0-9_\.@]+$/'],
             'emailTrim' => ['email', 'trim'],
