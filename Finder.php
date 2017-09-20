@@ -137,11 +137,19 @@ class Finder extends Object
      */
     public function findUserByUsernameOrEmail($usernameOrEmail)
     {
-        if (filter_var($usernameOrEmail, FILTER_VALIDATE_EMAIL)) {
-            return $this->findUserByEmail($usernameOrEmail);
-        }
+        /** @var \dektrium\user\Module $module */
+        $module = \Yii::$app->getModule('user');
 
-        return $this->findUserByUsername($usernameOrEmail);
+        if ($module->onlyEmailLogin) {
+            if (filter_var($usernameOrEmail, FILTER_VALIDATE_EMAIL)) {
+                return $this->findUserByEmail($usernameOrEmail);
+            }
+        } elseif (!$module->onlyEmailLogin) {
+            if (filter_var($usernameOrEmail, FILTER_VALIDATE_EMAIL)) {
+                return $this->findUserByEmail($usernameOrEmail);
+            }
+            return $this->findUserByUsername($usernameOrEmail);
+        }
     }
 
     /**

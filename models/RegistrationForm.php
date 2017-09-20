@@ -50,7 +50,9 @@ class RegistrationForm extends Model
             'usernameTrim'     => ['username', 'trim'],
             'usernameLength'   => ['username', 'string', 'min' => 3, 'max' => 255],
             'usernamePattern'  => ['username', 'match', 'pattern' => $user::$usernameRegexp],
-            'usernameRequired' => ['username', 'required'],
+            'usernameRequired' => ['username', 'required', 'when' => function() {
+                    return $this->module->enableUsernameRegistration;
+            }],
             'usernameUnique'   => [
                 'username',
                 'unique',

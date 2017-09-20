@@ -225,7 +225,14 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             // username rules
             'usernameTrim'     => ['username', 'trim'],
-            'usernameRequired' => ['username', 'required', 'on' => ['register', 'create', 'connect', 'update']],
+            'usernameRequired' => ['username', 'required', 'on' => [
+                    'register',
+                    'create',
+                    'connect',
+                    'update'],
+                    'when' => function() {
+                        return $this->module->enableUsernameRegistration;
+            }],
             'usernameMatch'    => ['username', 'match', 'pattern' => static::$usernameRegexp],
             'usernameLength'   => ['username', 'string', 'min' => 3, 'max' => 255],
             'usernameUnique'   => [

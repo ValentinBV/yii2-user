@@ -96,6 +96,12 @@ class Module extends BaseModule
      * if the application leaves DEBUG mode.
      */
     public $debug = false;
+    
+    /** @var bool Whether to enable username in registration form. */
+    public $enableUsernameRegistration = true;
+    
+    /** @var bool Whether to enable login only by email. */
+    public $onlyEmailLogin = false;
 
     /** @var array The rules to be used in URL management. */
     public $urlRules = [
